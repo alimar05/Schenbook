@@ -1,5 +1,4 @@
 #include <stdio.h>
-#define SIZE 5
 
 static void	tet_print(char tet[][SIZE])
 {
@@ -63,14 +62,14 @@ int			main(void)
 		{'.','A','.','.','\n'},
 		{'.','.','.','.','\n'},
 	};
-/*	char	tet2[][SIZE] =
+	char	tet2[][SIZE] =
 	{
-		{'.','.','.','.', '\n'},
 		{'B','B','B','B', '\n'},
 		{'.','.','.','.', '\n'},
 		{'.','.','.','.', '\n'},
+		{'.','.','.','.', '\n'},
 	};
-	char	tet3[][SIZE] =
+/*	char	tet3[][SIZE] =
 	{
 		{'C','.','.','.', '\n'},
 		{'C','C','C','.', '\n'},
@@ -85,8 +84,8 @@ int			main(void)
 		{'.','.','.','.', '\n'},
 	};
 */
-	printf("%d\n", tet_place(tet, tet1, 2, 2, 3, 2));
-//	printf("%d\n", tet_place(tet, tet1, 1, 1, 3, 2));
+	printf("%d\n", tet_place(tet, tet1, 0, 0, 3, 2));
+//	printf("%d\n", tet_place(tet, tet2, 3, 0, 1, 4));
 //	printf("%d\n", tet_place(tet, tet1, 1, 1, 3, 2));
 //	printf("%d\n", tet_place(tet, tet1, 1, 1, 3, 2));
 	tet_print(tet);
