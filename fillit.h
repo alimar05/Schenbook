@@ -6,7 +6,7 @@
 
 typedef	struct		s_list
 {
-	char			*tetra;
+	char			**tetra;
 	char			c;
 	char			y;
 	char			x;

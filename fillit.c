@@ -1,6 +1,6 @@
 #include "fillit.h"
 
-static void	tet_print(char tet[][SIZE])
+void	tet_print(char tet[][SIZE])
 {
 	int		i;
 	int		j;
