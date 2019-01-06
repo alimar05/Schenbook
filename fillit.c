@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "fillit.h"
 
 static void	tet_print(char tet[][SIZE])
 {
@@ -48,6 +48,8 @@ static char	tet_place(char map[][SIZE], char tet[][SIZE], char y, char x, char h
 
 int			main(void)
 {
+	int		i;
+	int		j;
 	char	tet[][SIZE] =
 	{
 		{'.','.','.','.','\n'},
@@ -55,13 +57,8 @@ int			main(void)
 		{'.','.','.','.','\n'},
 		{'.','.','.','.','\n'},
 	};
-	char	tet1[][SIZE] =
-	{
-		{'A','A','.','.','\n'},
-		{'.','A','.','.','\n'},
-		{'.','A','.','.','\n'},
-		{'.','.','.','.','\n'},
-	};
+	char	tet1[SIZE][SIZE];
+	char	tet11[] = "AA..\n.A..\n.A..\n....\n";
 	char	tet2[][SIZE] =
 	{
 		{'B','B','B','B', '\n'},
@@ -84,6 +81,15 @@ int			main(void)
 		{'.','.','.','.', '\n'},
 	};
 */
+	i = 0;
+	j = 0;
+	while (tet11[j])
+	{
+		if (j > 0 && j % 5 == 0)
+			i++;
+		tet1[i][j % 5] = tet11[j];
+		j++;
+	}
 	printf("%d\n", tet_place(tet, tet1, 0, 0, 3, 2));
 //	printf("%d\n", tet_place(tet, tet2, 3, 0, 1, 4));
 //	printf("%d\n", tet_place(tet, tet1, 1, 1, 3, 2));
