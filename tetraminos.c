@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "fillit.h"
 
-t_list	*ft_create_elem(char **tetra, char c, char y, char x,
+t_list	*ft_create_elem(char *tetra, char c, char y, char x,
 		char height, char width)
 {
 	t_list	*elem;
@@ -18,7 +18,7 @@ t_list	*ft_create_elem(char **tetra, char c, char y, char x,
 	return (elem);
 }
 
-void	ft_list_push_back(t_list **begin_list, char **tetra, char c,
+void	ft_list_push_back(t_list **begin_list, char *tetra, char c,
 		char y, char x, char height, char width)
 {
 	t_list	*list;
@@ -57,22 +57,6 @@ char	smallest_squre_size(char n)
 	while (size * size < n)
 		size++;
 	return (size);
-}
-
-void	tet_print(char **tetra)
-{
-	int		i;
-	int		j;
-
-	i = -1;
-	while (++i < SIZE - 1)
-	{
-		j = -1;
-		while (++j < SIZE)
-		{
-			printf("%c", tetra[i][j]);
-		}
-	}
 }
 /*
 void	converter(char **dst, char *src)
@@ -121,6 +105,7 @@ int		main(void)
 		{'.','.','.','.','\n'},
 		{'.','.','.','.','\n'},
 		{'.','.','.','.','\n'},
+		{'\0'},
 	};
 	char	tet1[][SIZE] =
 	{
@@ -128,6 +113,7 @@ int		main(void)
 		{'.','#','.','.','\n'},
 		{'.','#','.','.','\n'},
 		{'.','.','.','.','\n'},
+		{'\0'},
 	};
 	char	tet2[][SIZE] =
 	{
@@ -135,6 +121,7 @@ int		main(void)
 		{'.','.','.','.', '\n'},
 		{'.','.','.','.', '\n'},
 		{'.','.','.','.', '\n'},
+		{'\0'},
 	};
 	char	tet3[][SIZE] =
 	{
@@ -142,6 +129,7 @@ int		main(void)
 		{'#','#','#','.', '\n'},
 		{'.','.','.','.', '\n'},
 		{'.','.','.','.', '\n'},
+		{'\0'},
 	};
 	char	tet4[][SIZE] =
 	{
@@ -149,18 +137,19 @@ int		main(void)
 		{'.','#','#','.', '\n'},
 		{'.','.','.','.', '\n'},
 		{'.','.','.','.', '\n'},
+		{'\0'},
 	};
 
 	*begin_list = NULL;
-	ft_list_push_back(begin_list, tet1, 'A', 1, 0, 3, 2);
-	ft_list_push_back(begin_list, tet2, 'B', 1, 0, 1, 4);
-	ft_list_push_back(begin_list, tet3, 'C', 0, 0, 2, 3);
-	ft_list_push_back(begin_list, tet4, 'D', 1, 0, 2, 3);
+	ft_list_push_back(begin_list, (char *)tet1, 'A', 1, 0, 3, 2);
+	ft_list_push_back(begin_list, (char *)tet2, 'B', 1, 0, 1, 4);
+	ft_list_push_back(begin_list, (char *)tet3, 'C', 0, 0, 2, 3);
+	ft_list_push_back(begin_list, (char *)tet4, 'D', 1, 0, 2, 3);
 
 	buffer = *begin_list;
 	while (buffer)
 	{
-		tet_print(buffer->tetra);
+		printf("%s", buffer->tetra);
 		buffer = buffer->next;
 	}
 	return (0);
