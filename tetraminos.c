@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include "fillit.h"
 
-t_list	*ft_create_elem(char *tetra, char c, char y, char x,
+t_etra	*ft_create_elem(char **tetra, char c, char y, char x,
 		char height, char width)
 {
-	t_list	*elem;
+	t_etra	*elem;
 
-	if (!(elem = (t_list *)malloc(sizeof(t_list))))
+	if (!(elem = (t_etra *)malloc(sizeof(t_etra))))
 		return (NULL);
 	elem->tetra = tetra;
 	elem->c = c;
@@ -18,10 +18,10 @@ t_list	*ft_create_elem(char *tetra, char c, char y, char x,
 	return (elem);
 }
 
-void	ft_list_push_back(t_list **begin_list, char *tetra, char c,
+void	ft_list_push_back(t_etra **begin_list, char **tetra, char c,
 		char y, char x, char height, char width)
 {
-	t_list	*list;
+	t_etra	*list;
 
 	if (begin_list && *begin_list)
 	{
@@ -34,10 +34,10 @@ void	ft_list_push_back(t_list **begin_list, char *tetra, char c,
 		*begin_list = ft_create_elem(tetra, c, y, x, height, width);
 }
 
-char	ft_list_count(t_list **begin_list)
+char	ft_list_count(t_etra **begin_list)
 {
 	char	count;
-	t_list	*buffer;
+	t_etra	*buffer;
 
 	count = 0;
 	buffer = *begin_list;
@@ -73,7 +73,7 @@ void	converter(char **dst, char *src)
 	}
 }
 */
-char	is_tet_place(char **map, t_list *tet)
+char	is_tet_place(char **map, t_etra *tet)
 {
 	int		y;
 	int		x;
@@ -92,65 +92,4 @@ char	is_tet_place(char **map, t_list *tet)
 		y++;
 	}
 	return (1);
-}
-
-int		main(void)
-{
-	char	mapl[4][4];
-	t_list	*buffer;
-	t_list	**begin_list;
-	char	tet[][SIZE] =
-	{
-		{'.','.','.','.','\n'},
-		{'.','.','.','.','\n'},
-		{'.','.','.','.','\n'},
-		{'.','.','.','.','\n'},
-		{'\0'},
-	};
-	char	tet1[][SIZE] =
-	{
-		{'#','#','.','.','\n'},
-		{'.','#','.','.','\n'},
-		{'.','#','.','.','\n'},
-		{'.','.','.','.','\n'},
-		{'\0'},
-	};
-	char	tet2[][SIZE] =
-	{
-		{'#','#','#','#', '\n'},
-		{'.','.','.','.', '\n'},
-		{'.','.','.','.', '\n'},
-		{'.','.','.','.', '\n'},
-		{'\0'},
-	};
-	char	tet3[][SIZE] =
-	{
-		{'#','.','.','.', '\n'},
-		{'#','#','#','.', '\n'},
-		{'.','.','.','.', '\n'},
-		{'.','.','.','.', '\n'},
-		{'\0'},
-	};
-	char	tet4[][SIZE] =
-	{
-		{'#','#','.','.', '\n'},
-		{'.','#','#','.', '\n'},
-		{'.','.','.','.', '\n'},
-		{'.','.','.','.', '\n'},
-		{'\0'},
-	};
-
-	*begin_list = NULL;
-	ft_list_push_back(begin_list, (char *)tet1, 'A', 1, 0, 3, 2);
-	ft_list_push_back(begin_list, (char *)tet2, 'B', 1, 0, 1, 4);
-	ft_list_push_back(begin_list, (char *)tet3, 'C', 0, 0, 2, 3);
-	ft_list_push_back(begin_list, (char *)tet4, 'D', 1, 0, 2, 3);
-
-	buffer = *begin_list;
-	while (buffer)
-	{
-		printf("%s", buffer->tetra);
-		buffer = buffer->next;
-	}
-	return (0);
 }
