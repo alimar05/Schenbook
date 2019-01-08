@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 12:53:10 by rymuller          #+#    #+#             */
-/*   Updated: 2019/01/07 20:38:46 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/01/08 13:58:45 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,14 @@
 int		main(int argc, char **argv)
 {
 	int			i;
+	int			m;
+	int			n;
 	char		fd;
 	static char	str[1];
 	int			num_bytes;
+	char		width;
+	char		height;
+	char		count;
 	char		**temp;
 	char		**strsplit;
 	t_etra		**begin_list;
@@ -36,14 +41,34 @@ int		main(int argc, char **argv)
 		close(fd);
 	}
 	strsplit = ft_strsplit(str, '\n');
-	i = 0;
-	*begin_list = NULL;
-	while (strsplit[i])
+	if (!(temp = (char **)malloc(sizeof(char *) * 4)))
+		return (0);
+	i = -1;
+	while (strsplit[++i])
 	{
-		temp[i % 5] = str_split[i];
-		if (i % 5 == 0)
-			ft_list_push_back(begin_list, temp, )
+		if (i != 0 && i % 4 == 0)
+		{
+			height = 0;
+			width = 0;
+			m = -1;
+			while (++m < 4)
+			{
+				n = -1;
+				count = 0;
+				while (++n < 4)
+				{
+					if (temp[m][n] == '#')
+						count++;
+					if (count > width)
+						width = count;
+				}
+				if (ft_strchr(temp[m], '#'))
+					height++;
+			}
+			printf("%d %d\n", width, height);
+		}
+		temp[i % 4] = strsplit[i];
 	}
-	printf("%s\n", str_split[4]);
+	printf("%s\n", temp[4]);
 	return (0);
 }
