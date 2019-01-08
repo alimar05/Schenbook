@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 12:53:10 by rymuller          #+#    #+#             */
-/*   Updated: 2019/01/08 13:58:45 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/01/08 15:52:59 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,5 @@ int		main(int argc, char **argv)
 		}
 		temp[i % 4] = strsplit[i];
 	}
-	printf("%s\n", temp[4]);
 	return (0);
 }
