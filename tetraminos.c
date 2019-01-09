@@ -73,17 +73,17 @@ void	converter(char **dst, char *src)
 	}
 }
 */
-char	is_tet_place(char **map, t_etra *tet)
+char	is_tet_place(char **map, t_etra *tetra)
 {
 	int		y;
 	int		x;
 
-	x = tet->x;
-	y = tet->y;
-	while (y < tet->y + tet->height)
+	x = tetra->x;
+	y = tetra->y;
+	while (y < tetra->y + tetra->height)
 	{
-		x = tet->x;
-		while (x < tet->x + tet->width)
+		x = tetra->x;
+		while (x < tetra->x + tetra->width)
 		{
 			if (map[y][x] != '.')
 				return (0);

@@ -13,7 +13,10 @@ typedef	struct		s_etra
 	char			x;
 	char			height;
 	char			width;
-	struct s_list	*next;
+	struct s_etra	*next;
 }					t_etra;
+
+void	ft_list_push_back(t_etra **begin_list, char **tetra, char c,
+		char y, char x, char height, char width);
 
 #endif
