@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 12:53:10 by rymuller          #+#    #+#             */
-/*   Updated: 2019/01/09 14:57:56 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/01/10 00:52:30 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	size_tetra(char **tetra, char *width, char *height)
 {
 	int			m;
 	int			n;
-	char		count;
 
 	*width = 0;
 	*height = 0;
@@ -26,14 +25,12 @@ void	size_tetra(char **tetra, char *width, char *height)
 	while (++m < 4)
 	{
 		n = -1;
-		count = 0;
 		while (++n < 4)
-		{
-			if (tetra[m][n] == '#')
-				count++;
-			if (count > *width)
-				*width = count;
-		}
+			if (tetra[n][m] == '#')
+			{
+				*width = *width + 1;
+				break ;
+			}
 		if (ft_strchr(tetra[m], '#'))
 			*height = *height + 1;
 	}
@@ -72,29 +69,27 @@ int		main(int argc, char **argv)
 	*begin_list = NULL;
 	while (strsplit[++i])
 	{
-		tetra[i % 4] = strsplit[i];
 		if (i != 0 && i % 4 == 0)
 		{
 			size_tetra(tetra, &width, &height);
 			ft_list_push_back(begin_list, tetra, c++, 0, 0, height, width);
-			if (!(tetra = (char **)malloc(sizeof(char *) * 4)))
-				return (0);
 		}
+		tetra[i % 4] = strsplit[i];
 	}
 	if (i != 0 && i % 4 == 0)
 	{
 		size_tetra(tetra, &width, &height);
 		ft_list_push_back(begin_list, tetra, c, 0, 0, height, width);
+		free(tetra);
 	}
 	buffer = *begin_list;
-	while (buffer->next)
+	while (buffer)
 	{
 		i = -1;
 		while (++i < 4)
-			printf("%s\n", buffer->tetra[i]);
+			printf("%s\n", buffer->content[i]);
 		printf("%c\n", buffer->c);
-		printf("%d\n", buffer->height);
-		printf("%d\n", buffer->width);
+		printf("%d %d\n", buffer->height, buffer->width);
 		buffer = buffer->next;
 	}
 	return (0);

@@ -7,7 +7,7 @@
 
 typedef	struct		s_etra
 {
-	char			**tetra;
+	char			**content;
 	char			c;
 	char			y;
 	char			x;

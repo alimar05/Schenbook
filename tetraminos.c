@@ -1,19 +1,32 @@
 #include <stdlib.h>
 #include "fillit.h"
 
-t_etra	*ft_create_elem(char **tetra, char c, char y, char x,
+t_etra	*ft_create_elem(char **content, char c, char y, char x,
 		char height, char width)
 {
+	char	i;
 	t_etra	*elem;
 
 	if (!(elem = (t_etra *)malloc(sizeof(t_etra))))
 		return (NULL);
-	elem->tetra = tetra;
-	elem->c = c;
-	elem->y = y;
-	elem->x = x;
-	elem->height = height;
-	elem->width = width;
+	if (content != NULL)
+	{
+		if (!(elem->content = (char **)malloc(sizeof(char *) * 4)))
+		{
+			free(elem);
+			return (NULL);
+		}
+		i = -1;
+		while (++i < 4)
+			(elem->content)[i] = content[i];
+		elem->c = c;
+		elem->y = y;
+		elem->x = x;
+		elem->height = height;
+		elem->width = width;
+	}
+	else
+		elem->content = NULL;
 	elem->next = NULL;
 	return (elem);
 }
