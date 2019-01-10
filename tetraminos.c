@@ -4,7 +4,7 @@
 t_etra	*ft_create_elem(char **content, char c, char y, char x,
 		char height, char width)
 {
-	char	i;
+	int		i;
 	t_etra	*elem;
 
 	if (!(elem = (t_etra *)malloc(sizeof(t_etra))))
@@ -86,23 +86,3 @@ void	converter(char **dst, char *src)
 	}
 }
 */
-char	is_tet_place(char **map, t_etra *tetra)
-{
-	int		y;
-	int		x;
-
-	x = tetra->x;
-	y = tetra->y;
-	while (y < tetra->y + tetra->height)
-	{
-		x = tetra->x;
-		while (x < tetra->x + tetra->width)
-		{
-			if (map[y][x] != '.')
-				return (0);
-			x++;
-		}
-		y++;
-	}
-	return (1);
-}

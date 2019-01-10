@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 12:53:10 by rymuller          #+#    #+#             */
-/*   Updated: 2019/01/10 00:52:30 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/01/10 20:06:21 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int		main(int argc, char **argv)
 		return (0);
 	i = -1;
 	c = 'A';
+	if (!(begin_list = (t_etra **)malloc(1)))
+		return (0);
 	*begin_list = NULL;
 	while (strsplit[++i])
 	{
