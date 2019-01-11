@@ -86,3 +86,26 @@ void	converter(char **dst, char *src)
 	}
 }
 */
+char	init_map(char **map, char size)
+{
+	int		i;
+	int		j;
+
+//	if (!(map = (char **)malloc(sizeof(char *) * size)))
+//		return (0);
+	i = -1;
+	while (++i < size)
+	{
+		if (!(map[i] = (char *)malloc(sizeof(char) * size)))
+		{
+			while (--i >= 0)
+				free(map[i]);
+			free(map);
+			return (0);
+		}
+		j = -1;
+		while (++j < size)
+			map[i][j] = '.';
+	}
+	return (1);
+}

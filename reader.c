@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 12:53:10 by rymuller          #+#    #+#             */
-/*   Updated: 2019/01/10 20:06:21 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/01/11 22:58:06 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		main(int argc, char **argv)
 	int			num_bytes;
 	char		width;
 	char		height;
+	char		**map;
 	char		**tetra;
 	char		**strsplit;
 	t_etra		*buffer;
@@ -66,7 +67,7 @@ int		main(int argc, char **argv)
 		return (0);
 	i = -1;
 	c = 'A';
-	if (!(begin_list = (t_etra **)malloc(1)))
+	if (!(begin_list = (t_etra **)malloc(sizeof(t_etra *))))
 		return (0);
 	*begin_list = NULL;
 	while (strsplit[++i])
@@ -94,5 +95,9 @@ int		main(int argc, char **argv)
 		printf("%d %d\n", buffer->height, buffer->width);
 		buffer = buffer->next;
 	}
+	if (!(map = (char **)malloc(sizeof(char *) * 4)))
+		return (0);
+	printf("%d\n", init_map(map, 4));
+	printf("%s\n", map[3]);
 	return (0);
 }
