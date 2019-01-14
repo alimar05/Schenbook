@@ -6,98 +6,84 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 12:53:10 by rymuller          #+#    #+#             */
-/*   Updated: 2019/01/11 22:58:06 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/01/14 16:31:39 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "fillit.h"
-#define BUFF_SIZE 80
-
-void	size_tetra(char **tetra, char *width, char *height)
-{
-	int			m;
-	int			n;
-
-	*width = 0;
-	*height = 0;
-	m = -1;
-	while (++m < 4)
-	{
-		n = -1;
-		while (++n < 4)
-			if (tetra[n][m] == '#')
-			{
-				*width = *width + 1;
-				break ;
-			}
-		if (ft_strchr(tetra[m], '#'))
-			*height = *height + 1;
-	}
-}
+#define BUFF_SIZE 21
 
 int		main(int argc, char **argv)
 {
-	int			i;
-	char		c;
-	char		fd;
-	static char	str[1];
-	int			num_bytes;
-	char		width;
-	char		height;
-	char		**map;
-	char		**tetra;
-	char		**strsplit;
-	t_etra		*buffer;
-	t_etra		**begin_list;
-	char		buff[BUFF_SIZE + 1];
+	int		i;
+	int		j;
+	int		k;
+	char	c;
+	char	fd;
+	char	**map;
+	char	coor[8];
+	t_etra	*buffer;
+	int		num_bytes;
+	t_etra	**begin_list;
+	char	buff[BUFF_SIZE + 1];
 
 	if (argc == 2)
 	{
+		if (!(begin_list = (t_etra **)malloc(sizeof(t_etra *))))
+			return (0);
+		*begin_list = NULL;
+		c = 'A';
 		fd = open(argv[1], O_RDONLY);
 		while ((num_bytes = read(fd, buff, BUFF_SIZE)) > 0)
 		{
-			buff[num_bytes] = '\0';
-			ft_strcat(str, buff);
+			k = 0;
+			i = 0;
+			j = -1;
+			while (++j < BUFF_SIZE)
+			{
+				if (buff[j] == '#')
+				{
+					coor[k * 2] = j % 5;
+					coor[k * 2 + 1] = i;
+					k++;
+				}
+				if (buff[j] == '\n')
+					i++;
+			}
+			ft_list_push_back(begin_list, coor, c++);
 		}
 		close(fd);
-	}
-	strsplit = ft_strsplit(str, '\n');
-	if (!(tetra = (char **)malloc(sizeof(char *) * 4)))
-		return (0);
-	i = -1;
-	c = 'A';
-	if (!(begin_list = (t_etra **)malloc(sizeof(t_etra *))))
-		return (0);
-	*begin_list = NULL;
-	while (strsplit[++i])
-	{
-		if (i != 0 && i % 4 == 0)
+		/*		
+		buffer = *begin_list;
+		while (buffer)
 		{
-			size_tetra(tetra, &width, &height);
-			ft_list_push_back(begin_list, tetra, c++, 0, 0, height, width);
+			i = -1;
+			while (++i < 8)
+				printf("%d ", buffer->coor[i]);
+			printf("\n");
+			printf("%c\n", buffer->c);
+			buffer = buffer->next;
 		}
-		tetra[i % 4] = strsplit[i];
-	}
-	if (i != 0 && i % 4 == 0)
-	{
-		size_tetra(tetra, &width, &height);
-		ft_list_push_back(begin_list, tetra, c, 0, 0, height, width);
-		free(tetra);
-	}
-	buffer = *begin_list;
-	while (buffer)
-	{
-		i = -1;
-		while (++i < 4)
-			printf("%s\n", buffer->content[i]);
-		printf("%c\n", buffer->c);
-		printf("%d %d\n", buffer->height, buffer->width);
-		buffer = buffer->next;
+		*/
 	}
 	if (!(map = (char **)malloc(sizeof(char *) * 4)))
 		return (0);
 	printf("%d\n", init_map(map, 4));
-	printf("%s\n", map[3]);
+	tet_norm(begin_list);
+	buffer = *begin_list;
+//	while (buffer)
+//	{
+		buffer = buffer->next;
+		buffer = buffer->next;
+		buffer = buffer->next;
+		i = -1;
+		while (++i < 4)
+			map[(int)buffer->coor[i * 2 + 1]][(int)buffer->coor[i * 2]] = buffer->c;
+
+		i = -1;
+		while (++i < 4)
+			printf("%s\n", map[i]);
+//	}
 	return (0);
 }

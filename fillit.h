@@ -7,17 +7,13 @@
 
 typedef	struct		s_etra
 {
-	char			**content;
+	char			*coor;
 	char			c;
-	char			y;
-	char			x;
-	char			height;
-	char			width;
 	struct s_etra	*next;
 }					t_etra;
 
 char	init_map(char **map, char size);
-void	ft_list_push_back(t_etra **begin_list, char **tetra, char c,
-		char y, char x, char height, char width);
+void	tet_norm(t_etra **begin_list);
+void	ft_list_push_back(t_etra **begin_list, char *coor, char c);
 
 #endif
