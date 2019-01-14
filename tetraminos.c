@@ -40,14 +40,14 @@ void	ft_list_push_back(t_etra **begin_list, char *coor, char c)
 char	ft_list_count(t_etra **begin_list)
 {
 	char	count;
-	t_etra	*buffer;
+	t_etra	*tetra;
 
 	count = 0;
-	buffer = *begin_list;
-	while (buffer)
+	tetra = *begin_list;
+	while (tetra)
 	{
 		count++;
-		buffer = buffer->next;
+		tetra = tetra->next;
 	}
 	return (count);
 }
@@ -70,7 +70,7 @@ char	init_map(char **map, char size)
 	i = -1;
 	while (++i < size)
 	{
-		if (!(map[i] = (char *)malloc(sizeof(char) * size)))
+		if (!(map[i] = (char *)malloc(sizeof(char) * (size + 1))))
 		{
 			while (--i >= 0)
 				free(map[i]);
@@ -80,6 +80,7 @@ char	init_map(char **map, char size)
 		j = -1;
 		while (++j < size)
 			map[i][j] = '.';
+		map[i][j] = '\0';
 	}
 	return (1);
 }
@@ -113,38 +114,51 @@ static char	tet_min_y(char *coor)
 void	tet_norm(t_etra **begin_list)
 {
 	char	i;
-	char	x0;
-	char	y0;
-	t_etra	*buffer;
+	char	xmin;
+	char	ymin;
+	t_etra	*tetra;
 
-	buffer = *begin_list;
-	while (buffer)
+	tetra = *begin_list;
+	while (tetra)
 	{
 		i = -1;
-		x0 = tet_min_x(buffer->coor);
-		y0 = tet_min_y(buffer->coor);
+		xmin = tet_min_x(tetra->coor);
+		ymin = tet_min_y(tetra->coor);
 		while (++i < 4)
 		{
-			buffer->coor[i * 2] = buffer->coor[i * 2] - x0;
-			buffer->coor[i * 2 + 1] = buffer->coor[i * 2 + 1] - y0;
+			tetra->coor[i * 2] = tetra->coor[i * 2] - xmin;
+			tetra->coor[i * 2 + 1] = tetra->coor[i * 2 + 1] - ymin;
 		}
-		buffer = buffer->next;
+		tetra = tetra->next;
 	}
 }
 /*
 char	tet_place(char **map, t_etra **begin_list)
 {
 	int		i;
-	t_etra	*buffer;
+	t_etra	*tetra;
 
-	buffer = *begin_list;
+	tetra = *begin_list;
 	while (buffer)
 	{
 		i = -1;
 		while (++i < 4)
-			if (map[(int)buffer->coor[i * 2 + 1]][(int)buffer->coor[i * 2]] == '.')
-				map[(int)buffer->coor[i * 2 + 1]][(int)buffer->coor[i * 2]] = buffer->c;
+			if (map[(int)tetra->coor[i * 2 + 1]][(int)tetra->coor[i * 2]] == '.')
+				map[(int)tetra->coor[i * 2 + 1]][(int)tetra->coor[i * 2]] = tetra->c;
 	}
 }
 */
-char	tet_move(char *map, )
+void	tet_move(char size, t_etra *tetra)
+{
+	char	i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		if (tetra->coor[i * 2] + 1 < size)
+			tetra->coor[i * 2] = tetra->coor[i * 2] + 1;
+		else if (tetra->coor[i * 2 + 1] + 1 < size)
+		{
+			tetra->coor[i * 2] = tetra[i * 2] - tet_min_x(tetra->coor);
+			tetra->coor[i * 2 + 1] = tetra->coor[i * 2 + 1] + 1;
+}

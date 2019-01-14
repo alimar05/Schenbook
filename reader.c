@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 12:53:10 by rymuller          #+#    #+#             */
-/*   Updated: 2019/01/14 18:21:36 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/01/14 22:22:52 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int		main(int argc, char **argv)
 	char	c;
 	char	fd;
 	char	**map;
+	t_etra	*tetra;
 	char	coor[8];
-	t_etra	*buffer;
 	int		num_bytes;
 	t_etra	**begin_list;
 	char	buff[BUFF_SIZE + 1];
@@ -53,15 +53,15 @@ int		main(int argc, char **argv)
 		}
 		close(fd);
 		/*		
-		buffer = *begin_list;
-		while (buffer)
+		tetra = *begin_list;
+		while (tetra)
 		{
 			i = -1;
 			while (++i < 8)
-				printf("%d ", buffer->coor[i]);
+				printf("%d ", tetra->coor[i]);
 			printf("\n");
-			printf("%c\n", buffer->c);
-			buffer = buffer->next;
+			printf("%c\n", tetra->c);
+			tetra = tetra->next;
 		}
 		*/
 	}
@@ -69,16 +69,15 @@ int		main(int argc, char **argv)
 		return (0);
 	printf("%d\n", init_map(map, 4));
 	tet_norm(begin_list);
-	buffer = *begin_list;
-//	while (buffer)
-//	{
-		i = -1;
-		while (++i < 4)
-			map[(int)buffer->coor[i * 2 + 1]][(int)buffer->coor[i * 2]] = buffer->c;
+	tetra = *begin_list;
 
-		i = -1;
-		while (++i < 4)
-			printf("%s\n", map[i]);
-//	}
+	tet_move(tetra);
+	i = -1;
+	while (++i < 4)
+		map[(int)tetra->coor[i * 2 + 1]][(int)tetra->coor[i * 2]] = tetra->c;
+
+	i = -1;
+	while (++i < 4)
+		printf("%s\n", map[i]);
 	return (0);
 }
