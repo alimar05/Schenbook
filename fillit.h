@@ -1,8 +1,9 @@
 #ifndef FILLIT_H
 # define FILLIT_H
-# include <stdlib.h>
+# include <fcntl.h>
 # include <stdio.h>
-#include <libft.h>
+# include <libft.h>
+# define BUFF_SIZE 21
 # define SIZE 5
 
 typedef	struct		s_etra

@@ -6,13 +6,11 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 12:53:10 by rymuller          #+#    #+#             */
-/*   Updated: 2019/01/14 16:31:39 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/01/14 18:21:36 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
 #include "fillit.h"
-#define BUFF_SIZE 21
 
 int		main(int argc, char **argv)
 {
@@ -74,9 +72,6 @@ int		main(int argc, char **argv)
 	buffer = *begin_list;
 //	while (buffer)
 //	{
-		buffer = buffer->next;
-		buffer = buffer->next;
-		buffer = buffer->next;
 		i = -1;
 		while (++i < 4)
 			map[(int)buffer->coor[i * 2 + 1]][(int)buffer->coor[i * 2]] = buffer->c;

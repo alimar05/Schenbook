@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "fillit.h"
 
 t_etra	*ft_create_elem(char *coor, char c)
@@ -85,6 +84,32 @@ char	init_map(char **map, char size)
 	return (1);
 }
 
+static char	tet_min_x(char *coor)
+{
+	char	i;
+	char	xmin;
+
+	i = -1;
+	xmin = coor[0];
+	while (++i < 4)
+		if (coor[i * 2] < xmin)
+			xmin = coor[i * 2];
+	return (xmin);
+}
+
+static char	tet_min_y(char *coor)
+{
+	char	i;
+	char	ymin;
+
+	i = -1;
+	ymin = coor[1];
+	while (++i < 4)
+		if (coor[i * 2 + 1] < ymin)
+			ymin = coor[i * 2 + 1];
+	return (ymin);
+}
+
 void	tet_norm(t_etra **begin_list)
 {
 	char	i;
@@ -96,8 +121,8 @@ void	tet_norm(t_etra **begin_list)
 	while (buffer)
 	{
 		i = -1;
-		x0 = buffer->coor[0];
-		y0 = buffer->coor[1];
+		x0 = tet_min_x(buffer->coor);
+		y0 = tet_min_y(buffer->coor);
 		while (++i < 4)
 		{
 			buffer->coor[i * 2] = buffer->coor[i * 2] - x0;
@@ -106,3 +131,20 @@ void	tet_norm(t_etra **begin_list)
 		buffer = buffer->next;
 	}
 }
+/*
+char	tet_place(char **map, t_etra **begin_list)
+{
+	int		i;
+	t_etra	*buffer;
+
+	buffer = *begin_list;
+	while (buffer)
+	{
+		i = -1;
+		while (++i < 4)
+			if (map[(int)buffer->coor[i * 2 + 1]][(int)buffer->coor[i * 2]] == '.')
+				map[(int)buffer->coor[i * 2 + 1]][(int)buffer->coor[i * 2]] = buffer->c;
+	}
+}
+*/
+char	tet_move(char *map, )
