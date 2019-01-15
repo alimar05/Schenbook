@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 12:53:10 by rymuller          #+#    #+#             */
-/*   Updated: 2019/01/14 22:22:52 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/01/15 16:31:56 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int		main(int argc, char **argv)
 	tet_norm(begin_list);
 	tetra = *begin_list;
 
-	tet_move(tetra);
 	i = -1;
 	while (++i < 4)
 		map[(int)tetra->coor[i * 2 + 1]][(int)tetra->coor[i * 2]] = tetra->c;
