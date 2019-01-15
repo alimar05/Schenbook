@@ -37,9 +37,9 @@ void	ft_list_push_back(t_etra **begin_list, char *coor, char c)
 		*begin_list = ft_create_elem(coor, c);
 }
 
-char	ft_list_count(t_etra **begin_list)
+int		ft_list_count(t_etra **begin_list)
 {
-	char	count;
+	int		count;
 	t_etra	*tetra;
 
 	count = 0;
@@ -52,7 +52,7 @@ char	ft_list_count(t_etra **begin_list)
 	return (count);
 }
 
-char	smallest_squre_size(char n)
+char	smallest_square_size(int n)
 {
 	char	size;
 
@@ -62,15 +62,15 @@ char	smallest_squre_size(char n)
 	return (size);
 }
 
-char	init_map(char **map, char size)
+char	init_map(char **map, char size_map)
 {
 	int		i;
 	int		j;
 
 	i = -1;
-	while (++i < size)
+	while (++i < size_map)
 	{
-		if (!(map[i] = (char *)malloc(sizeof(char) * (size + 1))))
+		if (!(map[i] = (char *)malloc(sizeof(char) * (size_map + 1))))
 		{
 			while (--i >= 0)
 				free(map[i]);
@@ -78,7 +78,7 @@ char	init_map(char **map, char size)
 			return (0);
 		}
 		j = -1;
-		while (++j < size)
+		while (++j < size_map)
 			map[i][j] = '.';
 		map[i][j] = '\0';
 	}
@@ -192,21 +192,32 @@ char	tet_move(char size_map, t_etra *tetra)
 {
 	char	i;
 	char	xmin;
+	char	ymin;
 
 	i = -1;
 	while (++i < 4)
 		tetra->coor[i * 2] = tetra->coor[i * 2] + 1;
 	if (tet_max_x(tetra->coor) >= size_map)
 	{
-		i = -1;
 		xmin = tet_min_x(tetra->coor);
+		i = -1;
 		while (++i < 4)
 			tetra->coor[i * 2] = tetra->coor[i * 2] - xmin;
 		i = -1;
 		while (++i < 4)
 			tetra->coor[i * 2 + 1] = tetra->coor[i * 2 + 1] + 1;
 		if (tet_max_y(tetra->coor) >= size_map)
+		{
+			xmin = tet_min_x(tetra->coor);
+			ymin = tet_min_y(tetra->coor);
+			i = -1;
+			while (++i < 4)
+			{
+				tetra->coor[i * 2] = tetra->coor[i * 2] - xmin;
+				tetra->coor[i * 2 + 1] = tetra->coor[i * 2 + 1] - ymin;
+			}
 			return (0);
+		}
 	}
 	return (1);
 }

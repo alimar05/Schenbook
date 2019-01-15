@@ -13,8 +13,12 @@ typedef	struct		s_etra
 	struct s_etra	*next;
 }					t_etra;
 
-char	init_map(char **map, char size);
-void	tet_norm(t_etra **begin_list);
-void	ft_list_push_back(t_etra **begin_list, char *coor, char c);
+void				ft_list_push_back(t_etra **begin_list, char *coor, char c);
+char				smallest_square_size(int n);
+int					ft_list_count(t_etra **begin_list);
+char				init_map(char **map, char size_map);
+void				tet_norm(t_etra **begin_list);
+char				tet_place_map(char **map, t_etra *tetra);
+char				tet_move(char size_map, t_etra *tetra);
 
 #endif
