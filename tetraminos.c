@@ -155,9 +155,6 @@ void	tet_upper_left(t_etra *tetra)
 
 void	tet_norm(t_etra **begin_list)
 {
-	char	i;
-	char	xmin;
-	char	ymin;
 	t_etra	*tetra;
 
 	tetra = *begin_list;
@@ -188,17 +185,17 @@ void	tet_place_map(char **map, t_etra *tetra)
 		map[(int)tetra->coor[i * 2 + 1]][(int)tetra->coor[i * 2]] = tetra->c;
 }
 
-void	clear_map(char **map)
+void	clear_map(char **map, char size_map)
 {
 	char	i;
 	char	j;
 
 	i = -1;
-	while (++i < 4)
+	while (++i < size_map)
 	{
 		j = -1;
-		while (++j < 4)
-			map[i][j] = '.';
+		while (++j < size_map)
+			map[(int)i][(int)j] = '.';
 	}
 }
 
@@ -206,7 +203,6 @@ char	tet_move(char size_map, t_etra *tetra)
 {
 	char	i;
 	char	xmin;
-	char	ymin;
 
 	i = -1;
 	while (++i < 4)
@@ -237,12 +233,17 @@ char	solve_map(char **map, char size_map, t_etra *tetra)
 	{
 		if (!tet_move(size_map, tetra))
 		{
-			clear_map(map);
+			clear_map(map, size_map);
 			return (0);
 		}
 	}
 	tet_place_map(map, tetra);
-	while (!solve_map(map, tetra->next))
-		tet_move(size_map, tetra);
+	if (!solve_map(map, size_map, tetra->next))
+	{
+		if (!tet_move(size_map, tetra))
+			return (0);
+		if (!solve_map(map, size_map, tetra))
+			return (0);
+	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 12:53:10 by rymuller          #+#    #+#             */
-/*   Updated: 2019/01/16 16:37:10 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/01/16 20:07:49 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,11 @@ int		main(int argc, char **argv)
 		size_map = smallest_square_size(ft_list_count(begin_list) * 4);
 		if (!(map = (char **)malloc(sizeof(char *) * size_map)))
 			return (0);
+		if (!init_map(map, size_map))
+			return (0);
 		tet_norm(begin_list);
 		tetra = *begin_list;
-		while (!solve_map(map, tetra))
+		while (!solve_map(map, size_map, tetra))
 		{
 			size_map++;
 			if (!(map = (char **)malloc(sizeof(char *) * size_map)))
