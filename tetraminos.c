@@ -229,20 +229,20 @@ char	tet_move(char size_map, t_etra *tetra)
 	return (1);
 }
 
-char	solve_map(char **map, t_etra *tetra)
+char	solve_map(char **map, char size_map, t_etra *tetra)
 {
 	if (tetra == NULL)
 		return (0);
 	while (!is_tet_place_map(map, tetra))
 	{
-		if (!tet_move(map, tetra))
+		if (!tet_move(size_map, tetra))
 		{
 			clear_map(map);
 			return (0);
 		}
 	}
 	tet_place_map(map, tetra);
-	if (!solve_map(map, tetra->next))
-		return (0);
+	while (!solve_map(map, tetra->next))
+		tet_move(size_map, tetra);
 	return (1);
 }
