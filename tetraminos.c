@@ -137,6 +137,22 @@ static char	tet_max_y(char *coor)
 	return (ymax);
 }
 
+void	tet_upper_left(t_etra *tetra)
+{
+	char	i;
+	char	xmin;
+	char	ymin;
+
+	i = -1;
+	xmin = tet_min_x(tetra->coor);
+	ymin = tet_min_y(tetra->coor);
+	while (++i < 4)
+	{
+		tetra->coor[i * 2] = tetra->coor[i * 2] - xmin;
+		tetra->coor[i * 2 + 1] = tetra->coor[i * 2 + 1] - ymin;
+	}
+}
+
 void	tet_norm(t_etra **begin_list)
 {
 	char	i;
@@ -147,34 +163,12 @@ void	tet_norm(t_etra **begin_list)
 	tetra = *begin_list;
 	while (tetra)
 	{
-		i = -1;
-		xmin = tet_min_x(tetra->coor);
-		ymin = tet_min_y(tetra->coor);
-		while (++i < 4)
-		{
-			tetra->coor[i * 2] = tetra->coor[i * 2] - xmin;
-			tetra->coor[i * 2 + 1] = tetra->coor[i * 2 + 1] - ymin;
-		}
+		tet_upper_left(tetra);
 		tetra = tetra->next;
 	}
 }
-/*
-char	tet_place(char **map, t_etra **begin_list)
-{
-	int		i;
-	t_etra	*tetra;
 
-	tetra = *begin_list;
-	while (buffer)
-	{
-		i = -1;
-		while (++i < 4)
-			if (map[(int)tetra->coor[i * 2 + 1]][(int)tetra->coor[i * 2]] == '.')
-				map[(int)tetra->coor[i * 2 + 1]][(int)tetra->coor[i * 2]] = tetra->c;
-	}
-}
-*/
-char	tet_place_map(char **map, t_etra *tetra)
+char	is_tet_place_map(char **map, t_etra *tetra)
 {
 	char	i;
 
@@ -182,10 +176,30 @@ char	tet_place_map(char **map, t_etra *tetra)
 	while (++i < 4)
 		if (map[(int)tetra->coor[i * 2 + 1]][(int)tetra->coor[i * 2]] != '.')
 			return (0);
+	return (1);
+}
+
+void	tet_place_map(char **map, t_etra *tetra)
+{
+	char	i;
+
 	i = -1;
 	while (++i < 4)
 		map[(int)tetra->coor[i * 2 + 1]][(int)tetra->coor[i * 2]] = tetra->c;
-	return (1);
+}
+
+void	clear_map(char **map)
+{
+	char	i;
+	char	j;
+
+	i = -1;
+	while (++i < 4)
+	{
+		j = -1;
+		while (++j < 4)
+			map[i][j] = '.';
+	}
 }
 
 char	tet_move(char size_map, t_etra *tetra)
@@ -208,16 +222,27 @@ char	tet_move(char size_map, t_etra *tetra)
 			tetra->coor[i * 2 + 1] = tetra->coor[i * 2 + 1] + 1;
 		if (tet_max_y(tetra->coor) >= size_map)
 		{
-			xmin = tet_min_x(tetra->coor);
-			ymin = tet_min_y(tetra->coor);
-			i = -1;
-			while (++i < 4)
-			{
-				tetra->coor[i * 2] = tetra->coor[i * 2] - xmin;
-				tetra->coor[i * 2 + 1] = tetra->coor[i * 2 + 1] - ymin;
-			}
+			tet_upper_left(tetra);
 			return (0);
 		}
 	}
+	return (1);
+}
+
+char	solve_map(char **map, t_etra *tetra)
+{
+	if (tetra == NULL)
+		return (0);
+	while (!is_tet_place_map(map, tetra))
+	{
+		if (!tet_move(map, tetra))
+		{
+			clear_map(map);
+			return (0);
+		}
+	}
+	tet_place_map(map, tetra);
+	if (!solve_map(map, tetra->next))
+		return (0);
 	return (1);
 }
