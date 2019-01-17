@@ -176,27 +176,13 @@ char	is_tet_place_map(char **map, t_etra *tetra)
 	return (1);
 }
 
-void	tet_place_map(char **map, t_etra *tetra)
+void	tet_place_map(char **map, t_etra *tetra, char c)
 {
 	char	i;
 
 	i = -1;
 	while (++i < 4)
-		map[(int)tetra->coor[i * 2 + 1]][(int)tetra->coor[i * 2]] = tetra->c;
-}
-
-void	clear_map(char **map, char size_map)
-{
-	char	i;
-	char	j;
-
-	i = -1;
-	while (++i < size_map)
-	{
-		j = -1;
-		while (++j < size_map)
-			map[(int)i][(int)j] = '.';
-	}
+		map[(int)tetra->coor[i * 2 + 1]][(int)tetra->coor[i * 2]] = c;
 }
 
 char	tet_move(char size_map, t_etra *tetra)
@@ -227,23 +213,35 @@ char	tet_move(char size_map, t_etra *tetra)
 
 char	solve_map(char **map, char size_map, t_etra *tetra)
 {
+	static int i;
 	if (tetra == NULL)
-		return (0);
-	while (!is_tet_place_map(map, tetra))
+		return (1);
+	while (1)
 	{
-		if (!tet_move(size_map, tetra))
+		if (is_tet_place_map(map, tetra))
 		{
-			clear_map(map, size_map);
-			return (0);
+			tet_place_map(map, tetra, tetra->c);
+			if (solve_map(map, size_map, tetra->next))
+			{
+				i = -1;
+				while (++i < size_map)
+					printf("%s\n", map[i]);
+				exit(0);
+			}
+			else if (map[size_map - 1][size_map - 2] == 'A' && map[size_map - 1][size_map - 3] == 'A')
+			{
+				size_map++;
+				if (!(map = (char **)malloc(sizeof(char *) * size_map)))
+					return (0);
+				if (!init_map(map, size_map))
+					return (0);
+			}
+			tet_place_map(map, tetra, '.');
+			if (!tet_move(size_map, tetra))
+				return (0);
 		}
-	}
-	tet_place_map(map, tetra);
-	if (!solve_map(map, size_map, tetra->next))
-	{
-		if (!tet_move(size_map, tetra))
-			return (0);
-		if (!solve_map(map, size_map, tetra))
+		else if (!tet_move(size_map, tetra))
 			return (0);
 	}
-	return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 12:53:10 by rymuller          #+#    #+#             */
-/*   Updated: 2019/01/16 20:55:34 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/01/17 15:33:17 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int		main(int argc, char **argv)
 		tetra = *begin_list;
 		while (!solve_map(map, size_map, tetra))
 		{
+			break ;
 			size_map++;
 			if (!(map = (char **)malloc(sizeof(char *) * size_map)))
 				return (0);
