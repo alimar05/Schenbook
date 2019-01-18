@@ -148,7 +148,7 @@ void	tet_upper_left(t_etra *tetra)
 	ymin = tet_min_y(tetra->coor);
 	while (++i < 4)
 	{
-		tetra->coor[i * 2] = tetra->coor[i * 2] - xmin;
+		tetra->coor[i * 2] = tetra->coor[i * 2] - xmin - 1;
 		tetra->coor[i * 2 + 1] = tetra->coor[i * 2 + 1] - ymin;
 	}
 }
@@ -213,35 +213,17 @@ char	tet_move(char size_map, t_etra *tetra)
 
 char	solve_map(char **map, char size_map, t_etra *tetra)
 {
-	static int i;
 	if (tetra == NULL)
 		return (1);
-	while (1)
+	while (tet_move(size_map, tetra))
 	{
 		if (is_tet_place_map(map, tetra))
 		{
 			tet_place_map(map, tetra, tetra->c);
 			if (solve_map(map, size_map, tetra->next))
-			{
-				i = -1;
-				while (++i < size_map)
-					printf("%s\n", map[i]);
-				exit(0);
-			}
-			else if (map[size_map - 1][size_map - 2] == 'A' && map[size_map - 1][size_map - 3] == 'A')
-			{
-				size_map++;
-				if (!(map = (char **)malloc(sizeof(char *) * size_map)))
-					return (0);
-				if (!init_map(map, size_map))
-					return (0);
-			}
+				return (1);
 			tet_place_map(map, tetra, '.');
-			if (!tet_move(size_map, tetra))
-				return (0);
 		}
-		else if (!tet_move(size_map, tetra))
-			return (0);
 	}
 	return (0);
 }
